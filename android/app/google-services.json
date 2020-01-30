@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "913475052563",
+    "firebase_url": "https://greenspacelogistics-3d3fc.firebaseio.com",
+    "project_id": "greenspacelogistics-3d3fc",
+    "storage_bucket": "greenspacelogistics-3d3fc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:913475052563:android:9fc7c215009967629c8be6",
+        "android_client_info": {
+          "package_name": "com.greenspace.greenspacelogistics"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "913475052563-s7h5vlac0pamesjva4q4ptdk8gsb6vvs.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.greenspace.greenspacelogistics",
+            "certificate_hash": "6ac7e07c4b3294eecbf8c031c69bcc8dcea1420e"
+          }
+        },
+        {
+          "client_id": "913475052563-96ijgbtuhm3lno8jnut8cijqp25pdcg3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBqnDp0_devKQvOpAKXvKIorMx4eozGqLQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "913475052563-96ijgbtuhm3lno8jnut8cijqp25pdcg3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
