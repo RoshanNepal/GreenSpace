@@ -19,6 +19,8 @@ import {RNToasty} from 'react-native-toasty';
 import GetEstimate from './drawerScreens/GetEstimate';
 import OfflineNotice from './drawerScreens/OfflineNotice'
 import firebase from 'react-native-firebase';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import MyHistory from './drawerScreens/MyHistory';
 let {screenWidth, screenHeight} = Dimensions.get('window');
 class Dashboard extends Component {
   constructor(props) {
@@ -37,7 +39,6 @@ class Dashboard extends Component {
     );
   }*/ 
 
-  
   componentDidMount() {
   
     this.unsubscribe = firebase.auth().onAuthStateChanged(user => {
@@ -76,6 +77,21 @@ class Dashboard extends Component {
         this.setState({phoneNumber: phoneNumber});
       });
   }
+  updateProfile = () =>{
+    const {fullName} = this.state;
+    if(fullName === ''){
+      return(
+        <TouchableOpacity>
+          <Text>Update Profile</Text>
+        </TouchableOpacity>
+      );
+      
+    }else{
+      return(
+        <Text>{this.fullName}</Text>
+      )
+    }
+  }
 
   render() {
     const AppNavigator = createAppContainer(AppDrawerNavigator);
@@ -108,13 +124,15 @@ const CustomDrawerComponents = props => (
           width: '40%',
         }}
       />
+      
       <Text style={{fontSize: 16, color: '#fff'}}>{this.fullName}</Text>
       <Text style={{fontSize: 16, color: '#fff'}}>{this.phoneNumber}</Text>
     </View>
     <ScrollView>
       <DrawerItems {...props} />
     </ScrollView>
-    <StatusBar backgroundColor="#39803E" barStyles="light-content" />
+    
+    <StatusBar backgroundColor="#238B4F" barStyles="light-content" />
   </SafeAreaView>
 );
 
@@ -123,18 +141,18 @@ const AppDrawerNavigator = createDrawerNavigator(
     Home: HomeScreen,
     Profile: ProfileScreen,
     MyTrips:MyTrips,
+    History:MyHistory,
     Logout: LogoutScreen,
     GetEstimate: GetEstimate,
     OfflineNotice:OfflineNotice
-    
-    
   },
   {
     contentComponent: CustomDrawerComponents,
     contentOptions: {
       activeTintColor: '#2D9F5A',
+      
     },
-    initialRouteName: 'Home',
+    initialRouteName: 'Profile',
     drawerOpenRoute: 'DrawerOpen',
     unmountInactiveRoutes: true,
   },

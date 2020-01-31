@@ -192,7 +192,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   profileUI: {
-    backgroundColor: '#38c771',
+    
     flex: 2,
     height: 200,
     justifyContent: 'center',
@@ -251,6 +251,12 @@ const styles = StyleSheet.create({
     marginTop: 20,
     borderLeftWidth: 15,
     borderColor: '#2D9F5A',
+    borderRadius: 15,
+  },
+  myHistoryCard: {
+    marginTop: 20,
+    borderLeftWidth: 15,
+    borderColor: 'red',
     borderRadius: 15,
   },
   totalCostText: {

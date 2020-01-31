@@ -4,14 +4,12 @@ import {
   Text,
   TouchableOpacity,
   Image,
-  TextInput,
-  Alert,
-  Platform,
   ScrollView,
-  Dimensions,
-  TouchableNativeFeedback,
+  Picker,
   KeyboardAvoidingView,
 } from 'react-native';
+import {Card, Button, Icon} from 'react-native-elements';
+import {OutlinedTextField} from 'react-native-material-textfield';
 import CustomHeaderComponent from '../components/CustomHeaderComponent';
 import styles from '../styles';
 import Loader from '../components/Loader';
@@ -39,7 +37,6 @@ class ProfileScreen extends Component {
   };
   componentDidMount() {
     this.getData();
-
   }
 
   getData() {
@@ -56,6 +53,10 @@ class ProfileScreen extends Component {
         console.log(snapshot.data().email);
         fullName = snapshot.data().fullName;
         email = snapshot.data().email;
+        address = snapshot.data().address;
+        gender = snapshot.data().gender;
+        this.setState({gender: gender});
+        this.setState({address: address});
         this.setState({fullName: fullName});
         this.setState({tempfullName: fullName});
         this.setState({email: email});
@@ -68,94 +69,93 @@ class ProfileScreen extends Component {
   }
 
   updateProfile = () => {
-          const {fullName, email, tempfullName} = this.state;
-          const fbRootRefFS = firebase.firestore();
-          const user = firebase.auth().currentUser;
+    const {fullName, email, tempfullName, address, gender} = this.state;
+    const fbRootRefFS = firebase.firestore();
+    const user = firebase.auth().currentUser;
 
-          const userID = user.uid;
+    const userID = user.uid;
 
-          userRef = fbRootRefFS
-            .collection('users')
-            .doc(userID)
-            .set({
-              fullName: tempfullName,
-              email,
-            });
+    userRef = fbRootRefFS
+      .collection('users')
+      .doc(userID)
+      .set({
+        fullName: tempfullName,
+        email,
+        address,
+        gender,
+      });
 
-          RNToasty.Success({
-            title: 'Profile Updated',
-            duration: 2000,
-          });
-          this.setState({fullName: tempfullName});
-          this.getData();
-        } 
+    RNToasty.Success({
+      title: 'Profile Updated',
+      duration: 2000,
+    });
+    this.setState({fullName: tempfullName});
+    this.getData();
+  };
 
   render() {
     return (
       <ScrollView stickyHeaderIndices={[0]} style={{flex: 1}}>
         <CustomHeaderComponent props={this.props} screenHeaderTitle="Profile" />
-        <View style={styles.screenscontainer}>
-          <Loader loading={this.state.loading} />
-          <View style={styles.profileUI}>
-            <Image
-              source={require('../images/user.jpg')}
-              style={{height: 90, width: 90, borderRadius: 60}}
-            />
-            <Text style={{fontSize: 16, color: '#fff'}}>
-              {this.state.fullName}
-            </Text>
-            <Text style={{fontSize: 16, color: '#fff'}}>
-              {this.state.phoneNumber}
-            </Text>
-          </View>
-          <KeyboardAvoidingView style={styles.editprofileform} enabled>
-            <TextInput
-              style={styles.forminputBox}
-              keyboardType="default"
-              placeholder="Full Name"
-              value={this.state.tempfullName.toString()}
-              editable={true}
-              onChangeText={value =>
-                this.setState({tempfullName: value.toString()})
-              }
-            />
-            <TextInput
-              style={styles.forminputBox}
-              keyboardType="email-address"
-              placeholder="Email"
-              value={this.state.email}
-              onChangeText={value => this.setState({email: value})}
-            />
-            <TextInput
-              style={styles.forminputBox}
-              keyboardType="email-address"
-              placeholder="Email"
-              value={this.state.email}
-              onChangeText={value => this.setState({email: value})}
-            />
-            <TextInput
-              style={styles.forminputBox}
-              keyboardType="email-address"
-              placeholder="Email"
-              value={this.state.email}
-              onChangeText={value => this.setState({email: value})}
-            />
-            <TextInput
-              style={styles.forminputBox}
-              keyboardType="email-address"
-              placeholder="Email"
-              value={this.state.email}
-              onChangeText={value => this.setState({email: value})}
-            />
-            <View style={{flex: 1}}>
-              <TouchableOpacity
-                onPress={this.updateProfile}
-                style={styles.button}>
-                <Text style={styles.buttonText}>Update Profile</Text>
-              </TouchableOpacity>
-            </View>
-          </KeyboardAvoidingView>
+
+        <Loader loading={this.state.loading} />
+        <View style={styles.profileUI}>
+          <Image
+            source={require('../images/user.jpg')}
+            style={{height: 110, width: 110, borderRadius: 60}}
+          />
+          <Text style={{fontSize: 24, fontWeight: 'bold', color: '#2D9F5A'}}>
+            {this.state.fullName}
+          </Text>
         </View>
+
+        
+          <View style = {{flexDirection:"row",justifyContent:"flex-start",alignItems:"center",marginBottom:12,marginLeft:20}}>
+            <View style = {{backgroundColor:"#2D9F5A",height:50 ,width:"13%",justifyContent:"center",alignItems:"center",borderTopRightRadius:20,borderBottomRightRadius:20,borderTopLeftRadius:20,borderBottomLeftRadius:20}}>
+          <Image
+            source={require('../images/phone.png')}
+            style={{height: 30, width: 30}}
+          />
+          </View>
+            <View style={{justifyContent:"center",width:"87%"}}>
+              <Text style={{fontWeight:"bold",color:"#555555",paddingLeft:50}}>{this.state.phoneNumber}</Text>
+            </View>
+          </View>
+        
+          <View style = {{flexDirection:"row",justifyContent:"flex-start",alignItems:"center",marginBottom:12,marginLeft:20}}>
+            <View style = {{backgroundColor:"#2D9F5A",height:50 ,width:"13%",justifyContent:"center",alignItems:"center",borderTopRightRadius:20,borderBottomRightRadius:20,borderTopLeftRadius:20,borderBottomLeftRadius:20}}>
+          <Image
+            source={require('../images/mail.png')}
+            style={{height: 20, width: 20}}
+          />
+          </View>
+            <View style={{justifyContent:"center",width:"87%"}}>
+              <Text style={{fontWeight:"bold",color:"#555555",paddingLeft:50}}>{this.state.email}</Text>
+            </View>
+          </View>
+          <View style = {{flexDirection:"row",justifyContent:"flex-start",alignItems:"center",marginBottom:12,marginLeft:20}}>
+            <View style = {{backgroundColor:"#2D9F5A",height:50 ,width:"13%",justifyContent:"center",alignItems:"center",borderTopRightRadius:20,borderBottomRightRadius:20,borderTopLeftRadius:20,borderBottomLeftRadius:20}}>
+          <Image
+            source={require('../images/pin.png')}
+            style={{height: 20, width: 20}}
+          />
+          </View>
+            <View style={{justifyContent:"center",width:"87%"}}>
+              <Text style={{fontWeight:"bold",color:"#555555",paddingLeft:50}}>{this.state.address}</Text>
+            </View>
+          </View>
+          <View style = {{flexDirection:"row",justifyContent:"flex-start",alignItems:"center",marginBottom:12,marginLeft:20}}>
+            <View style = {{backgroundColor:"#2D9F5A",height:50 ,width:"13%",justifyContent:"center",alignItems:"center",borderTopRightRadius:20,borderBottomRightRadius:20,borderTopLeftRadius:20,borderBottomLeftRadius:20}}>
+          <Image
+            source={require('../images/gender.png')}
+            style={{height: 20, width: 20}}
+          />
+          </View>
+            <View style={{justifyContent:"center",width:"87%"}}>
+              <Text style={{fontWeight:"bold",color:"#555555",paddingLeft:50}}>{this.state.gender}</Text>
+            </View>
+          </View>
+
       </ScrollView>
     );
   }

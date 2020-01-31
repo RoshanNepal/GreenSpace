@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text,StatusBar } from 'react-native';
 import SignUp from './src/SignUp';
 import SplashScreen from './SplashScreen';
 import checkIfFirstLaunch from './src/components/checkFirstLaunch';
@@ -38,6 +38,7 @@ class App extends Component {
     
 
   render() {
+    <StatusBar backgroundColor="#238B4F" barStyles="light-content" />
     const { hasCheckedAsyncStorage, isFirstLaunch } = this.state;
     if (!hasCheckedAsyncStorage) {
       return null;

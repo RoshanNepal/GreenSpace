@@ -11,16 +11,16 @@ import {Card} from 'react-native-elements';
 import CustomHeaderComponent from '../components/CustomHeaderComponent';
 import firebase from 'react-native-firebase';
 
-class MyTrips extends Component {
+class MyHistory extends Component {
   constructor(props) {
     super(props);
     this.state = {
       response: [],
-      responseFalse: [],
+      responseTrue: [],
     };
   }
   static navigationOptions = {
-    drawerLabel: 'My Trips',
+    drawerLabel: 'My History',
     drawerIcon: ({tintColor}) => (
       <Image
         source={require('../images/myTrip.png')}
@@ -42,11 +42,11 @@ class MyTrips extends Component {
     });
 
     this.state.response.map(items => {
-      if (items.DeliveryStatus == false) {
+      if (items.DeliveryStatus == true) {
         const obj = {items};
         console.log(obj);
         this.setState({
-          responseFalse: [...this.state.responseFalse, obj.items],
+          responseTrue: [...this.state.responseTrue, obj.items],
         });
       }
     });
@@ -55,51 +55,35 @@ class MyTrips extends Component {
   componentDidMount() {
     this.getTripData();
   }
-  //for true or false
-  handlepressed = () => {
-    console.log(this.state.response);
-
-    this.state.response.map(items => {
-      if (items.TotalDistance == '2' && items.TotalDistance == '25') {
-        console.log('sad');
-      }
-      console.log(items.DeliveryStatus);
-    });
-  };
 
   listEmptyComponent = () => {
     return (
       <Text style={{textAlign: 'center'}}>
-        You do not have any trips scheduled
+        You haven't made any trips yet.
       </Text>
     );
   };
 
   render() {
-    this.state.response.map(items => {
-      if (items.DeliveryStatus ==false) {
-        
-      }
-    });
     
     
     return (
       <ScrollView stickyHeaderIndices={[0]} style={{flex: 1}}>
         <CustomHeaderComponent
           props={this.props}
-          screenHeaderTitle="My Trips"
+          screenHeaderTitle="My History"
         />
         
         <FlatList
           showsVerticalScrollIndicator={false}
-          keyExtractor={responseFalse => responseFalse.scheduledDate}
-          data={this.state.responseFalse}
+          keyExtractor={responseTrue => responseTrue.scheduledDate}
+          data={this.state.responseTrue}
           
           ListEmptyComponent={this.listEmptyComponent}
           renderItem={({item}) => {
             console.log({item});
             return (
-              <Card containerStyle={styles.myTripsCard}>
+              <Card containerStyle={styles.myHistoryCard}>
                 <View style={{flex: 1, flexDirection: 'row'}}>
                   <View style={{flex:1.5,flexDirection:"column",justifyContent:"space-between"}}>
                     <Text style={styles.totalCostText}>
@@ -149,4 +133,4 @@ class MyTrips extends Component {
   }
 }
 
-export default MyTrips;
+export default MyHistory;

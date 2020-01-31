@@ -17,6 +17,7 @@ import NetInfo from "@react-native-community/netinfo";
 import CustomHeaderComponent from '../components/CustomHeaderComponent';
 import {RNToasty} from 'react-native-toasty';
 let {width, height} = Dimensions.get('window');
+import firebase from 'react-native-firebase'
 export default class HomeScreen extends Component {
   constructor(props) {
     super(props);
@@ -51,6 +52,34 @@ export default class HomeScreen extends Component {
       />
     ),
   };
+  componentDidMount = () => {
+    this.getData();
+    
+  }
+  getData() {
+    const user = firebase.auth().currentUser;
+    const userID = user.uid;
+
+    firebase
+      .firestore()
+      .collection('users')
+      .doc(userID)
+      .get()
+      .then(snapshot => {
+        console.log(snapshot.data());
+        console.log(snapshot.data().email);
+        fullName = snapshot.data().fullName;
+        email = snapshot.data().email;
+        this.setState({fullName: fullName});
+        this.setState({tempfullName: fullName});
+        this.setState({email: email});
+        phoneNumber = user.phoneNumber.toString();
+        this.setState({phoneNumber: phoneNumber});
+        this.setState({
+          loading: false,
+        });
+      });
+  }
 
   render() {
     return (
